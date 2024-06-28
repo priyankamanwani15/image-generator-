@@ -56,7 +56,7 @@ router.route("/").post(async (req, res) => {
       res.status(500).send("No response received from Replicate API");
     } else {
       console.error("Error Message:", error.message);
-      res.status(500).send(error.message || "Something went wrong");
+      res.status(500).send("Something went wrong");
     }
   }
 });
