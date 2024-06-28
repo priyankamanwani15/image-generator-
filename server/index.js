@@ -21,11 +21,18 @@ app.get("/", async (req, res) => {
 const startServer = async () => {
   try {
     await connectDB(process.env.MONGODB_URL);
-    const PORT = process.env.PORT || 8080; // Use PORT from environment variables or default to 8080
+    const PORT = process.env.PORT || 8080; // Use Render provided port
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (error) {
     console.error("Failed to start the server:", error);
+    process.exit(1);
   }
 };
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error("Error occurred:", err.stack);
+  res.status(500).json({ message: "Internal Server Error" });
+});
 
 startServer();
